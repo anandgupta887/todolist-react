@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import List from "./List";
+import Todos from "./Todos";
 import db from "./firebase";
 import firebase from "firebase";
+import { Input, Button } from "@material-ui/core";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 function App() {
   const [input, setInput] = useState("");
@@ -11,9 +13,9 @@ function App() {
   useEffect(() => {
     db.collection("items")
       .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        setItems(snapshot.docs.map((doc) => doc.data().item));
-      });
+      .onSnapshot((snapshot) =>
+        setItems(snapshot.docs.map((doc) => doc.data().item))
+      );
   }, []);
 
   const handleChange = (e) => {
@@ -26,19 +28,20 @@ function App() {
       item: input,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
-    console.log(items);
     setInput("");
   };
 
   return (
     <div className="App">
       <form>
-        <input onChange={handleChange} value={input} />
-        <button onClick={handleClick}>Add</button>
+        <Input onChange={handleChange} className="App__input" value={input} />
+        <Button disabled={!input} onClick={handleClick} className="App__button">
+          <AddCircleIcon />
+        </Button>
       </form>
       <ul>
         {items.map((item) => (
-          <List text={item} />
+          <Todos text={item} />
         ))}
       </ul>
     </div>
