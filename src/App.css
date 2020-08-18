@@ -40,12 +40,3 @@ li {
     transform: rotate(360deg);
   }
 }
-
-.App__input {
-  display: flex;
-  flex: 1;
-}
-
-.App_button {
-  flex: 0;
-}

@@ -69,11 +69,14 @@ function App() {
           </Button>
         </FormControl>
       </form>
-      <ul>
-        {items.map((item) => (
-          <Todos key={item.id} id={item.id} text={item.todo} />
-        ))}
-      </ul>
+
+      <div className="App__listitem">
+        <ul>
+          {items.map((item) => (
+            <Todos key={item.id} id={item.id} text={item.todo} />
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
