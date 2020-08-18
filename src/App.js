@@ -3,7 +3,13 @@ import "./App.css";
 import Todos from "./Todos";
 import db from "./firebase";
 import firebase from "firebase";
-import { Input, Button } from "@material-ui/core";
+import {
+  Input,
+  Button,
+  FormControl,
+  InputLabel,
+  FormHelperText,
+} from "@material-ui/core";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 function App() {
@@ -14,7 +20,12 @@ function App() {
     db.collection("items")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) =>
-        setItems(snapshot.docs.map((doc) => doc.data().item))
+        setItems(
+          snapshot.docs.map((doc) => ({
+            todo: doc.data().item,
+            id: doc.id,
+          }))
+        )
       );
   }, []);
 
@@ -33,15 +44,34 @@ function App() {
 
   return (
     <div className="App">
+      <h1>Hello Visitor</h1>
+      <p>This is to do list app made with React.js</p>
       <form>
-        <Input onChange={handleChange} className="App__input" value={input} />
-        <Button disabled={!input} onClick={handleClick} className="App__button">
-          <AddCircleIcon />
-        </Button>
+        <FormControl>
+          <InputLabel htmlFor="my-input">Enter here</InputLabel>
+          <Input
+            fullWidth
+            className="App__input"
+            value={input}
+            onChange={handleChange}
+            id="my-input"
+            aria-describedby="my-helper-text"
+            margin="dense"
+          />
+          <FormHelperText id="my-helper-text">Todo List Input</FormHelperText>
+          <Button
+            disabled={!input}
+            onClick={handleClick}
+            className="App__button"
+            type="submit"
+          >
+            <AddCircleIcon />
+          </Button>
+        </FormControl>
       </form>
       <ul>
         {items.map((item) => (
-          <Todos text={item} />
+          <Todos key={item.id} id={item.id} text={item.todo} />
         ))}
       </ul>
     </div>
