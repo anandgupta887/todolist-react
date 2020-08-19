@@ -50,6 +50,7 @@ function App() {
         <FormControl>
           <InputLabel htmlFor="my-input">Enter here</InputLabel>
           <Input
+            autoFocus
             fullWidth
             className="App__input"
             value={input}
@@ -59,15 +60,15 @@ function App() {
             margin="dense"
           />
           <FormHelperText id="my-helper-text">Todo List Input</FormHelperText>
-          <Button
-            disabled={!input}
-            onClick={handleClick}
-            className="App__button"
-            type="submit"
-          >
-            <AddCircleIcon />
-          </Button>
         </FormControl>
+        <Button
+          disabled={!input}
+          onClick={handleClick}
+          className="App__button"
+          type="submit"
+        >
+          <AddCircleIcon />
+        </Button>
       </form>
 
       <div className="App__listitem">
